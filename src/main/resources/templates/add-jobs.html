@@ -12,11 +12,9 @@
     <title>Profile Setup</title>
 </head>
 
-<body>
-
-<div style="display: flex">
-    <div class="col-md-5 coffee_mug_background">
-        <label class="mt-0.5 ms-5">
+<body class="background">
+    <div>
+        <label class="mt-4 ms-5">
             <a th:href="@{/dashboard/}"
                class="btn fw-bold"
                style="background-color: #164081; color: white; border: none;">
@@ -24,101 +22,101 @@
             </a>
         </label>
     </div>
-    <div class="col-md-7 container myForm">
-        <form id="job-main-form" th:action="@{/dashboard/addNew}" th:object="${jobPostActivity}" method="post" class="job-add-form"  enctype="multipart/form-data" >
-            <input hidden type="text" th:field="*{jobPostId}" >
-            <input hidden type="text" th:field="*{jobLocationId.Id}" >
-            <input hidden type="text" th:field="*{jobCompanyId.Id}" >
-            <input hidden type="text" th:field="*{postedDate}">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="d-flex justify-content-center pt-3">
-                        <h1 class="heading_font font-weight-bold">Post New Job</h1>
-                    </div>
-                </div>
-            </div>
-            <label class="heading_font font_sub_heading_color">Job Details</label>
-            <div class="row" >
-                <div class="col-lg-12 form-group">
-                    <input id="title" type="text" th:field="*{jobTitle}" class="form-control" placeholder="Job Title">
-                </div>
-            </div>
+    <div class="add-job-container">
 
-            <div class="row">
-                <div class="col-md-4 form-group">
+        <div class="add-job-box shadow-effect">
+            <div class="add-job-title"><h2>Tạo công việc mới</h2></div>
+            <form id="job-main-form" th:action="@{/dashboard/addNew}" th:object="${jobPostActivity}" method="post" class="job-add-form"  enctype="multipart/form-data" >
+                <input hidden type="text" th:field="*{jobPostId}" >
+                <input hidden type="text" th:field="*{jobLocationId.Id}" >
+                <input hidden type="text" th:field="*{jobCompanyId.Id}" >
+                <input hidden type="text" th:field="*{postedDate}">
+
+                <div class="add-row">
+                    <div class="add-row-title">Tên công việc</div>
+                    <input id="title" type="text" th:field="*{jobTitle}" class="form-control" placeholder="Tên công việc">
+                </div>
+
+                <div class="add-row">
+                    <div class="add-row-title">Hình thức làm việc</div>
                     <select id="type" th:field="*{jobType}" class="form-control">
-                        <option value="" >Employment Type</option>
-                        <option th:value="Full-time" >Full-time</option>
-                        <option th:value="Part-time" >Part-time</option>
-                        <option th:value="Freelance" >Freelance</option>
-                        <option th:value="Internship" >Internship</option>
+                        <option value="" >Lựa chọn</option>
+                        <option th:value="Full-time" >Toàn thời gian</option>
+                        <option th:value="Part-time" >Bán thời gian</option>
+                        <option th:value="Freelance" >Tự do</option>
+                        <option th:value="Internship" >Thực tập</option>
                     </select>
                 </div>
-                <div class="col-md-4 form-group">
+
+
+                <div class="add-row">
+                    <div class="add-row-title">Địa điểm làm việc</div>
                     <select id="remote" th:field="*{remote}" class="form-control">
-                        <option value="">Select a Remote</option>
-                        <option th:value="Remote-Only">Remote-Only</option>
-                        <option th:value="Office-Only">Office-Only</option>
-                        <option th:value="Partial-Remote"> Partial-Remote</option>
+                        <option value="">Lựa chọn</option>
+                        <option th:value="Remote-Only">Làm việc từ xa</option>
+                        <option th:value="Office-Only">Văn phòng</option>
+                        <option th:value="Partial-Remote">Kết hợp</option>
                     </select>
                 </div>
-                <div class="col-md-4 form-group">
-                    <input id="salary" th:field="*{salary}" type="text" class="form-control" placeholder="Salary">
+
+                <div class="add-row">
+                    <div class="add-row-title">Thu nhập</div>
+                    <input id="salary" th:field="*{salary}" type="text" class="form-control" placeholder="Thu nhập">
                 </div>
-                <div class="col-md-4 form-group">
-                    <input id="number" th:field="*{number}" type="text" class="form-control" placeholder="số lượng tuyển">
+
+                <div class="add-row">
+                    <div class="add-row-title">Số lượng tuyển</div>
+                    <input id="number" th:field="*{number}" type="text" class="form-control" placeholder="Số lượng">
                 </div>
-                <div class="col-md-4 form-group">
+
+                <div class="add-row">
+                    <div class="add-row-title">Ngành/ Lĩnh vực</div>
                     <input id="field" th:field="*{field}" type="text" class="form-control" placeholder="ngành">
                 </div>
-                <div class="col-md-4 form-group">
+
+                <div class="add-row">
+                    <div class="add-row-title">Số năm kinh nghiệm yêu cầu</div>
                     <input id="experience_required" th:field="*{experienceRequired}" type="text" class="form-control" placeholder="Số năm kinh nghiệm">
                 </div>
-                <div class="col-md-4 form-group">
+
+                <div class="add-row">
+                    <div class="add-row-title">Trình độ học vấn yêu cầu</div>
                     <input id="certificate_required" th:field="*{certificateRequired}" type="text" class="form-control" placeholder="Trình độ học vấn">
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 form-group">
-                    <label class="mt-2 heading_font font_sub_heading_color">Description</label>
+
+
+                <div class="add-row">
+                    <div class="add-row-title">Mô tả công việc</div>
                     <textarea type="text" rows="4" id="content" placeholder="Content" class="form-control"
-                              th:field="*{descriptionOfJob}" autocomplete="off"></textarea>
+                              th:field="*{descriptionOfJob}" autocomplete="off" ></textarea>
                 </div>
-            </div>
 
-            <label class="mt-2 heading_font font_sub_heading_color">Location</label>
-            <div class="row" >
-                <div class="col-md-4 form-group">
-                    <input th:field="*{jobLocationId.city}" id="city" type="text"  class="form-control" placeholder="City">
+                <div class="add-row">
+                    <div class="add-row-title">Địa chỉ</div>
+                    <div class="add-row-row">
+                        <input th:field="*{jobLocationId.city}" id="city" type="text"  class="form-control" placeholder="Địa chỉ">
+                        <input id="state" th:field="*{jobLocationId.state}" type="text"  class="form-control" placeholder="Xã/phường">
+                        <input id="country" th:field="*{jobLocationId.country}" type="text"  class="form-control" placeholder="Tỉnh/thành phố">
+                    </div>
                 </div>
-                <div class="col-md-4 form-group">
-                    <input id="state" th:field="*{jobLocationId.state}" type="text"  class="form-control" placeholder="State">
+                <div class="add-row">
+                    <div class="add-row-title">Tên công ty</div>
+                    <input id="companyName" th:field="*{jobCompanyId.name}" type="text" class="form-control" placeholder="Công ty">
                 </div>
-                <div class="col-md-4 form-group">
-                    <input id="country" th:field="*{jobLocationId.country}" type="text"  class="form-control" placeholder="Country">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12 form-group">
-                    <label class="mt-2 heading_font font_sub_heading_color">Company</label>
-                    <input id="companyName" th:field="*{jobCompanyId.name}" type="text" class="form-control" placeholder="Company Name">
-                </div>
-                <div class="col-lg-12 form-group">
-                    <label class="mt-2 heading_font font_sub_heading_color">Logo</label>
+                <div class="add-row">
+                    <div class="add-row-title">Logo công ty</div>
                     <input id="companyLogo" name="companyLogo" type="file" class="form-control" accept="image/*">
-
+                    <div class="add-row-row">
+                        <img id="logoPreview" src="#" alt="Xem trước logo"
+                             style="display:none; margin-top:10px; max-height:120px; border-radius:8px;">
+                    </div>
                 </div>
-            </div>
 
-            <div class="row mt-4" >
-                <div class="col d-flex justify-content-center">
-                    <button type="submit" name="submit" class="btn btn-primary base_button px-4 py-2 mb-5">Save</button>
-                </div>
-            </div>
-        </form>
+                <button type="submit" name="submit" class="myBtn btn-save">Đăng</button>
+            </form>
 
+        </div>
     </div>
-</div>
 
 <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script type="text/javascript" th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
@@ -132,6 +130,24 @@ console.log($('#content'));
         height: 100
     });
 </script>
+    <script>
+        const fileInput = document.getElementById('companyLogo');
+        const previewImg = document.getElementById('logoPreview');
 
+        fileInput.addEventListener('change', function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    previewImg.src = e.target.result;
+                    previewImg.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                previewImg.style.display = 'none';
+                previewImg.src = '#';
+            }
+        });
+    </script>
 </body>
 </html>

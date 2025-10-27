@@ -914,3 +914,56 @@ mr-5 {
   margin: 0;
   font-weight: 400;
 }
+
+.add-job-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+.add-job-box h1 {
+  color: #164081;
+  font-weight: 700;
+  font-family: inherit;
+
+}
+.add-job-title {
+  height: 50px;
+  background-color: #164081;
+  color: white;
+  width: 100%;
+  position: sticky;
+  top: 0;
+}
+.add-job-title h2 {
+  margin-left: 10px;
+  padding-top: 3px;
+}
+.add-job-box {
+  width: 800px;
+  height: 850px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  overflow-y: auto;
+}
+
+.add-job-box form {
+    padding: 20px;
+}
+.add-row-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.add-row {
+  margin-bottom: 10px;
+}
+.add-row-row input {
+    width: fit-content;
+  margin-right: 10px;
+}
+
+.btn-save {
+  padding: 10px;
+}
