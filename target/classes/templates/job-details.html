@@ -184,9 +184,24 @@
                     </div>
                 </div>
             </div>
-            <div class="infor-detail">
-                <div class="infor-detail-name"><i class="fa-solid fa-circle-info"></i><p> Chi tiết tuyển dụng</p></div>
-                <div th:utext="${jobDetails.descriptionOfJob}" class = "description"></div>
+            <div class="infor-detail" >
+                <div class="infor-detail-name" sec:authorize="hasAuthority('Job Seeker')"><i class="fa-solid fa-circle-info"></i><p> Chi tiết tuyển dụng</p></div>
+                <div th:utext="${jobDetails.descriptionOfJob}" class = "description" sec:authorize="hasAuthority('Job Seeker')"></div>
+                <div class="infor-detail-name">
+                    <i class="fa-solid fa-users-line"></i>
+                    <p th:text="${'Số lượt ứng tuyển: ' + #lists.size(applyList)}"></p>
+                </div>
+
+                <div class="list-candidate">
+                    <label>Candidates Applied for Job</label>
+                    <th:block th:each="applyList:${applyList}">
+                        <a th:href="@{/job-seeker-profile/{id}(id=${applyList.userId.userAccountId})}"
+                           class="white"
+                           th:text="${applyList.userId.firstName+' '+applyList.userId.lastName}">FirstName
+                            LastName</a>
+                    </th:block>
+                </div>
+
             </div>
         </div>
         <div class="sideright">

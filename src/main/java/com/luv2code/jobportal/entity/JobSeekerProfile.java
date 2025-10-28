@@ -39,7 +39,7 @@ public class JobSeekerProfile {
         this.userId = userId;
     }
 
-    public JobSeekerProfile(Integer userAccountId, Users userId, String firstName, String lastName, String city, String state, String country, String resume, String profilePhoto, List<Skills> skills) {
+    public JobSeekerProfile(Integer userAccountId, Users userId, String firstName, String lastName, String city, String state, String country, String resume, String profilePhoto, List<Skills> skills, String certificate, String experience) {
         this.userAccountId = userAccountId;
         this.userId = userId;
         this.firstName = firstName;
@@ -66,7 +66,9 @@ public class JobSeekerProfile {
     public String getCertificate() {
         return certificate;
     }
-    public void setCertificate(String certificate) {}
+    public void setCertificate(String certificate) {
+        this.certificate = certificate;
+    }
 
     public Integer getUserAccountId() {
         return userAccountId;

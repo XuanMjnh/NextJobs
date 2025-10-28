@@ -34,7 +34,10 @@
                 </div>
 
             </div>
-
+            <div class="add-row">
+                <div class="add-row-title">Email</div>
+                <input th:field="*{userId.email}" type="text" class="form-control"  disabled />
+            </div>
             <div class="add-row">
                 <div class="add-row-title">Địa chỉ</div>
                 <div class="add-row-row">
@@ -45,9 +48,7 @@
             </div>
             <div class="add-row">
                 <div class="add-row-title">Công ty</div>
-                <div class="add-row-row">
-                    <input placeholder="Công ty" id="company" name="company" th:field="*{company}" type="text" class="form-control"  />
-                </div>
+                <input placeholder="Công ty" id="company" name="company" th:field="*{company}" type="text" class="form-control"  />
             </div>
 
             <div class="add-row">
@@ -58,19 +59,13 @@
                     <input th:field="*{profilePhoto}" type="hidden" class="form-control" />
                 </div>
 
-                <!-- Hiển thị ảnh xem trước -->
                 <div class="add-row-row">
                     <img id="logoPreview"
-                         th:if="*{profilePhoto} != null"
-                         th:src="@{'/photos/recruiter/' + ${profile.userAccountId} + '/' + ${profile.profilePhoto}}"
+                         th:src="${profile.profilePhoto != null && profile.profilePhoto != ''  ?
+                 '/photos/recruiter/' + profile.userAccountId + '/' + profile.profilePhoto :
+                 '/assets/default-avatar.png'}"
                          alt="Ảnh đại diện"
-                         style="display:block; margin-top:10px; max-height:120px; border-radius:8px;">
-
-                    <img th:if="*{profilePhoto} == null"
-                         id="logoPreviewPlaceholder"
-                         src="#"
-                         alt="Chưa có ảnh"
-                         style="display:none; margin-top:10px; max-height:120px; border-radius:8px;">
+                         style="display:block; margin-top:10px; max-height:120px; border-radius:8px; border: 1px solid #c8c8c8;">
                 </div>
                 <label for="image" class="btn btn-outline-secondary" style="margin-top: 10px">Cập nhật ảnh</label>
             </div>
@@ -93,15 +88,10 @@
         const file = this.files[0];
         if (file) {
             const reader = new FileReader();
-            reader.onload = function (e) {
-                previewImg.src = e.target.result;
-                previewImg.style.display = 'block';
-            };
+            reader.onload = e => previewImg.src = e.target.result;
             reader.readAsDataURL(file);
-        } else {
-            previewImg.style.display = 'none';
-            previewImg.src = '#';
         }
     });
+
 </script>
 </html>

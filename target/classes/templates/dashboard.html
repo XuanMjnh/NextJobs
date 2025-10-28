@@ -262,6 +262,7 @@
 
     <article>
         <label class="large-label" sec:authorize="hasAuthority('Job Seeker')"><i class="fa fa-search"></i> Kết quả tìm kiếm</label>
+        <label class="large-label" sec:authorize="hasAuthority('Recruiter')"><i class="fa-regular fa-folder"></i> Danh sách công việc</label>
         <div class="box">
             <th:block th:each="jobPost:${jobPost}">
                 <a

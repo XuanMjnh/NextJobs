@@ -61,7 +61,10 @@
                     <input placeholder="Tên" id="lastName" name="lastName" th:field="*{lastName}" type="text" class="form-control"  />
                 </div>
             </div>
-
+            <div class="add-row">
+                <div class="add-row-title">Email</div>
+                <input th:field="*{userId.email}" type="text" class="form-control"  disabled />
+            </div>
             <div class="add-row">
                 <div class="add-row-title">Địa chỉ</div>
                 <div class="add-row-row">
@@ -69,6 +72,15 @@
                     <input id="state" th:field="*{state}" type="text"  class="form-control" placeholder="Xã/phường">
                     <input id="country" th:field="*{country}" type="text"  class="form-control" placeholder="Tỉnh/thành phố">
                 </div>
+            </div>
+
+            <div class="add-row">
+                <div class="add-row-title">Trình độ học vấn</div>
+                <input id="certificate" th:field="*{certificate}" class="form-control" placeholder="Trình độ">
+            </div>
+            <div class="add-row">
+                <div class="add-row-title">Kinh nghiệm làm việc</div>
+                <input id="experience" th:field="*{experience}" class="form-control" placeholder="Kinh nghiệm">
             </div>
 
             <div class="add-row">
@@ -129,46 +141,37 @@
             </div>
             <div class="add-row">
                 <div class="add-row-title">Ảnh đại diện</div>
-               <div class="add-row-row">
-                   <input id="image" type="file" name="image" class="form-control" accept="image/png, image/jpeg" style="display:none;">
-                   <input type="text" name="profilePhoto" th:field="*{profilePhoto}" class="form-control" hidden />
-               </div>
+                <div class="add-row-row">
+                    <input id="image" type="file" name="image" class="form-control" accept="image/png, image/jpeg" style="display:none;">
+                    <input type="text" name="profilePhoto" th:field="*{profilePhoto}" hidden />
+                </div>
+
                 <div class="add-row-row">
                     <img id="logoPreview"
-                         th:if="*{profilePhoto} != null"
-                         th:src="@{'/photos/candidate/' + ${profile.userAccountId} + '/' + ${profile.profilePhoto}}"
+                         th:src="${profile.profilePhoto != null && profile.profilePhoto != '' ?
+                 '/photos/candidate/' + profile.userAccountId + '/' + profile.profilePhoto :
+                 '/assets/default-avatar.png'}"
                          alt="Ảnh đại diện"
-                         style="display:block; margin-top:10px; max-height:120px; border-radius:8px;">
-
-                    <img th:if="*{profilePhoto} == null"
-                         id="logoPreviewPlaceholder"
-                         src="#"
-                         alt="Chưa có ảnh"
-                         style="display:none; margin-top:10px; max-height:120px; border-radius:8px;">
+                         style="display:block; margin-top:10px; max-height:120px; border-radius:8px; border: 1px solid #c8c8c8;">
                 </div>
-                <label for="image" class="btn btn-outline-secondary" style="margin-top: 10px">Cập nhật ảnh</label>
+
+                <label for="image" class="btn btn-outline-secondary" style="margin-top:10px">Chọn/Cập nhật ảnh</label>
             </div>
 
             <div class="add-row">
                 <div class="add-row-title">CV</div>
                 <div class="add-row-row">
-                    <input
-                            type="file"
-                            name="pdf"
-                            class="form-control"
-                            required="true"
-                            accept="application/pdf"
-                            style="display: none"
-                            id="CV"
-                    />
-                    <input type="text" name="resume" th:field="*{resume}" class="form-control" hidden/>
-                    <div th:if="${profile.resume != null and profile.resume != ''}">
-                        <span id="resumeName" th:text="${profile.resume}" style="color: green"></span>
-                        <label for="CV" class="btn btn-outline-secondary" >Cập nhật CV</label>
-                        <a th:href="@{|/job-seeker-profile/downloadResume?fileName=${profile.resume}&&userID=${profile.userAccountId}|}"
-                           class="btn btn-outline-secondary">
-                            Tải xuống
-                        </a>
+                    <input type="file" name="pdf" class="form-control" accept="application/pdf" style="display:none;" id="CV"/>
+                    <input type="text" name="resume" th:field="*{resume}" hidden/>
+
+                    <div>
+                      <span id="resumeName"
+                            th:text="${profile.resume != null && profile.resume != '' ? profile.resume : 'Chưa có CV'}"
+                            style="color: green"></span>
+                        <label for="CV" class="btn btn-outline-secondary">Chọn/Cập nhật CV</label>
+                        <a th:if="${profile.resume != null && profile.resume != ''}"
+                           th:href="@{|/job-seeker-profile/downloadResume?fileName=${profile.resume}&&userID=${profile.userAccountId}|}"
+                           class="btn btn-outline-secondary">Tải xuống</a>
                     </div>
                 </div>
             </div>
@@ -258,19 +261,14 @@
         const file = this.files[0];
         if (file) {
             const reader = new FileReader();
-            reader.onload = function (e) {
-                previewImg.src = e.target.result;
-                previewImg.style.display = 'block';
-            };
+            reader.onload = e => previewImg.src = e.target.result;
             reader.readAsDataURL(file);
-        } else {
-            previewImg.style.display = 'none';
-            previewImg.src = '#';
         }
     });
+
 </script>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", () => {
         const cvInput = document.getElementById("CV");
         const resumeName = document.getElementById("resumeName");
 
@@ -278,12 +276,13 @@
             cvInput.addEventListener("change", function () {
                 const file = this.files[0];
                 if (file) {
-                    resumeName.textContent = file.name; // Cập nhật tên hiển thị
-                    resumeName.style.color = "green";   // Tô màu cho dễ nhận biết (tùy chọn)
+                    resumeName.textContent = file.name;
+                    resumeName.style.color = "green";
                 }
             });
         }
     });
+
 </script>
 
 </html>
