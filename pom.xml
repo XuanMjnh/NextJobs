@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.luv2code</groupId>
-	<artifactId>jobportal</artifactId>
+	<artifactId>nextjobs</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>jobportal</name>
 	<description>Job Portal</description>

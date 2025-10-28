@@ -106,10 +106,12 @@
                 <div class="add-row">
                     <div class="add-row-title">Logo công ty</div>
                     <input id="companyLogo" name="companyLogo" type="file" class="form-control" accept="image/*">
+                    <input  th:field="*{jobCompanyId.logo}" type="hidden" class="form-control">
                     <div class="add-row-row">
                         <img id="logoPreview" src="#" alt="Xem trước logo"
                              style="display:none; margin-top:10px; max-height:120px; border-radius:8px;">
                     </div>
+
                 </div>
 
                 <button type="submit" name="submit" class="myBtn btn-save">Đăng</button>
@@ -149,5 +151,6 @@ console.log($('#content'));
             }
         });
     </script>
+
 </body>
 </html>

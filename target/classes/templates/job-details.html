@@ -130,7 +130,14 @@
                         <div class="infor-main-icon"><i class="fa-solid fa-clock"></i></div>
                         <div class="infor-main-content">
                             <div class="infor-main-content-title">Hình thức</div>
-                            <div th:text="${jobDetails.jobType}">Full-time</div>
+                            <div th:switch="${jobDetails.jobType}">
+                                <span th:case="'Full-time'">Toàn thời gian</span>
+                                <span th:case="'Part-time'">Bán thời gian</span>
+                                <span th:case="'Freelance'">Tự do</span>
+                                <span th:case="'Internship'">Thực tập</span>
+                                <span th:case="*">Không xác định</span>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -252,7 +259,13 @@
                     <div class="request-job-icon"><i class="fa-solid fa-briefcase"></i></div>
                     <div class="request-job-infor">
                         <p>Hình thức làm việc</p>
-                        <span th:text="${jobDetails.remote}">Văn phòng</span>
+                        <span th:switch="${jobDetails.remote}">
+                        <span th:case="'Remote-Only'">Làm việc từ xa</span>
+                        <span th:case="'Office-Only'">Văn phòng</span>
+                        <span th:case="'Partial-Remote'">Kết hợp</span>
+                        <span th:case="*">Không xác định</span>
+                        </span>
+
                     </div>
                 </div>
                 <div class="request-job-row">
