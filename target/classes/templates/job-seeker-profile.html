@@ -37,7 +37,7 @@
 </div>
 <div class="add-job-container">
 
-    <div class="profile-container shadow-effect">
+    <div class="profile-container-seeker shadow-effect">
         <div class="add-job-title"><h2>Thông tin cá nhân</h2></div>
         <form
                 th:action="@{/job-seeker-profile/addNew}"
@@ -130,30 +130,46 @@
             <div class="add-row">
                 <div class="add-row-title">Ảnh đại diện</div>
                <div class="add-row-row">
-                   <input id="image" type="file" name="image" class="form-control" accept="image/png, image/jpeg" />
+                   <input id="image" type="file" name="image" class="form-control" accept="image/png, image/jpeg" style="display:none;">
                    <input type="text" name="profilePhoto" th:field="*{profilePhoto}" class="form-control" hidden />
                </div>
                 <div class="add-row-row">
-                    <img id="logoPreview" src="#" alt="Xem trước logo"
+                    <img id="logoPreview"
+                         th:if="*{profilePhoto} != null"
+                         th:src="@{'/photos/candidate/' + ${profile.userAccountId} + '/' + ${profile.profilePhoto}}"
+                         alt="Ảnh đại diện"
+                         style="display:block; margin-top:10px; max-height:120px; border-radius:8px;">
+
+                    <img th:if="*{profilePhoto} == null"
+                         id="logoPreviewPlaceholder"
+                         src="#"
+                         alt="Chưa có ảnh"
                          style="display:none; margin-top:10px; max-height:120px; border-radius:8px;">
                 </div>
+                <label for="image" class="btn btn-outline-secondary" style="margin-top: 10px">Cập nhật ảnh</label>
             </div>
 
             <div class="add-row">
                 <div class="add-row-title">CV</div>
                 <div class="add-row-row">
                     <input
-                            sec:authorize="hasAuthority('Job Seeker')"
                             type="file"
                             name="pdf"
                             class="form-control"
                             required="true"
                             accept="application/pdf"
+                            style="display: none"
+                            id="CV"
                     />
                     <input type="text" name="resume" th:field="*{resume}" class="form-control" hidden/>
-                    <a sec:authorize="hasAuthority('Recruiter')"
-                       th:href="@{|/job-seeker-profile/downloadResume?fileName=${profile.resume}&&userID=${profile.userAccountId}|}">Download
-                        Resume</a>
+                    <div th:if="${profile.resume != null and profile.resume != ''}">
+                        <span id="resumeName" th:text="${profile.resume}" style="color: green"></span>
+                        <label for="CV" class="btn btn-outline-secondary" >Cập nhật CV</label>
+                        <a th:href="@{|/job-seeker-profile/downloadResume?fileName=${profile.resume}&&userID=${profile.userAccountId}|}"
+                           class="btn btn-outline-secondary">
+                            Tải xuống
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -253,4 +269,21 @@
         }
     });
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const cvInput = document.getElementById("CV");
+        const resumeName = document.getElementById("resumeName");
+
+        if (cvInput && resumeName) {
+            cvInput.addEventListener("change", function () {
+                const file = this.files[0];
+                if (file) {
+                    resumeName.textContent = file.name; // Cập nhật tên hiển thị
+                    resumeName.style.color = "green";   // Tô màu cho dễ nhận biết (tùy chọn)
+                }
+            });
+        }
+    });
+</script>
+
 </html>

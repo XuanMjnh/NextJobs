@@ -955,6 +955,14 @@ mr-5 {
   margin-top: 100px;
 }
 
+.profile-container-seeker {
+  width: 800px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  overflow-y: auto;
+  max-height: 850px;
+}
+
 
 #job-main-form {
     padding: 20px;
@@ -976,4 +984,5 @@ mr-5 {
   padding: 10px;
 }
 
-.
+
+

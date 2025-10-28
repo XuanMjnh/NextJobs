@@ -49,15 +49,32 @@
                     <input placeholder="Công ty" id="company" name="company" th:field="*{company}" type="text" class="form-control"  />
                 </div>
             </div>
+
             <div class="add-row">
                 <div class="add-row-title">Ảnh đại diện</div>
-                <input id="image" type="file" name="image" class="form-control" accept="image/png, image/jpeg" />
-                <input type="text" name="profilePhoto" th:field="*{profilePhoto}" class="form-control" hidden />
+
                 <div class="add-row-row">
-                    <img id="logoPreview" src="#" alt="Xem trước logo"
+                    <input id="image" type="file" name="image" class="form-control" accept="image/png, image/jpeg" style="display:none;">
+                    <input th:field="*{profilePhoto}" type="hidden" class="form-control" />
+                </div>
+
+                <!-- Hiển thị ảnh xem trước -->
+                <div class="add-row-row">
+                    <img id="logoPreview"
+                         th:if="*{profilePhoto} != null"
+                         th:src="@{'/photos/recruiter/' + ${profile.userAccountId} + '/' + ${profile.profilePhoto}}"
+                         alt="Ảnh đại diện"
+                         style="display:block; margin-top:10px; max-height:120px; border-radius:8px;">
+
+                    <img th:if="*{profilePhoto} == null"
+                         id="logoPreviewPlaceholder"
+                         src="#"
+                         alt="Chưa có ảnh"
                          style="display:none; margin-top:10px; max-height:120px; border-radius:8px;">
                 </div>
+                <label for="image" class="btn btn-outline-secondary" style="margin-top: 10px">Cập nhật ảnh</label>
             </div>
+
             <button type="submit" name="submit" class="myBtn btn-save">Lưu</button>
         </form>
     </div>
