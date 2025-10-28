@@ -21,8 +21,7 @@ public class JobSeekerProfile {
     private String city;
     private String state;
     private String country;
-    private String workAuthorization;
-    private String employmentType;
+
     private String resume;
     private String experience;
     private String certificate;
@@ -40,7 +39,7 @@ public class JobSeekerProfile {
         this.userId = userId;
     }
 
-    public JobSeekerProfile(Integer userAccountId, Users userId, String firstName, String lastName, String city, String state, String country, String workAuthorization, String employmentType, String resume, String profilePhoto, List<Skills> skills) {
+    public JobSeekerProfile(Integer userAccountId, Users userId, String firstName, String lastName, String city, String state, String country, String resume, String profilePhoto, List<Skills> skills) {
         this.userAccountId = userAccountId;
         this.userId = userId;
         this.firstName = firstName;
@@ -48,8 +47,7 @@ public class JobSeekerProfile {
         this.city = city;
         this.state = state;
         this.country = country;
-        this.workAuthorization = workAuthorization;
-        this.employmentType = employmentType;
+
         this.resume = resume;
         this.profilePhoto = profilePhoto;
         this.skills = skills;
@@ -126,21 +124,6 @@ public class JobSeekerProfile {
         this.country = country;
     }
 
-    public String getWorkAuthorization() {
-        return workAuthorization;
-    }
-
-    public void setWorkAuthorization(String workAuthorization) {
-        this.workAuthorization = workAuthorization;
-    }
-
-    public String getEmploymentType() {
-        return employmentType;
-    }
-
-    public void setEmploymentType(String employmentType) {
-        this.employmentType = employmentType;
-    }
 
     public String getResume() {
         return resume;
@@ -182,8 +165,6 @@ public class JobSeekerProfile {
                 ", city='" + city + '\'' +
                 ", state='" + state + '\'' +
                 ", country='" + country + '\'' +
-                ", workAuthorization='" + workAuthorization + '\'' +
-                ", employmentType='" + employmentType + '\'' +
                 ", resume='" + resume + '\'' +
                 ", profilePhoto='" + profilePhoto + '\'' +
                 ", experience='" + experience + '\'' +

@@ -5,89 +5,61 @@
     <link rel="stylesheet" type="text/css" media="all"  th:href="@{/css/font-awesome.min.css}" />
     <link rel="stylesheet" type="text/css" media="all"  th:href="@{/css/style.css}" />
     <link rel="stylesheet" type="text/css" media="all"  th:href="@{/css/styles.css}" />
-   <meta charset="UTF-8" />
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Profile Setup</title>
 </head>
 
-<body>
-<div class="row" style="margin-right:0">
-    <div class="col-5 coffee_mug_background">
-        <label class="mt-0.5 ms-5">
-            <a th:href="@{/dashboard/}"
-               class="btn fw-bold"
-               style="background-color: #164081; color: white; border: none;">
-                NextJobs
-            </a>
-        </label>
-    </div>
-    <div class=" col-7">
-        <div class="myForm">
-            <form th:action="@{/recruiter-profile/addNew}" th:object="${profile}" method="post" enctype="multipart/form-data"
-            >
-                <div class="row gutters ">
-                    <div class="row mt-5">
-                        <div class="col-md-12">
-                            <div class="d-flex justify-content-center ">
-                                <h1 class="heading_font font-weight-bold">
-                                    Recruiter
-                                </h1>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div >
-                                    <h2 class="d-flex justify-content-center heading_font">
-                                        Set up your Profile
-                                    </h2>
-                                </div>
-                            </div>
+<body class="background">
+<div>
+    <label class="mt-4 ms-5">
+        <a th:href="@{/dashboard/}"
+           class="btn fw-bold"
+           style="background-color: #164081; color: white; border: none;">
+            NextJobs
+        </a>
+    </label>
+</div>
+<div class="add-job-container">
 
-                            <div class="card-body ms-2.5">
-                                <label class="heading_font font_sub_heading_color">Name</label>
-                                <div class="row ">
-                                    <div class="col-md-6 pr-1">
-                                        <input placeholder="First Name" id="firstName" th:field="*{firstName}"  name="firstName"  type="text" class="form-control"  />
-                                    </div>
-                                    <div class="col-md-6 pl-1">
-                                        <input placeholder="Last Name" id="lastName" name="lastName" th:field="*{lastName}" type="text" class="form-control"  />
-                                    </div>
-                                </div>
-                                <div class="row " >
-                                    <div class="col-md-4 pr-1">
-                                        <input placeholder="City" name="city" th:field="*{city}" type="text" class="form-control"  />
-                                    </div>
-                                    <div class="col-md-4 px-1">
-                                        <input placeholder="State" name="state" type="text" th:field="*{state}" class="form-control"  />
-                                    </div>
-                                    <div class="col-md-4 pl-1">
-                                        <input placeholder="Country" name="country" th:field="*{country}" type="text" class="form-control"  />
-                                    </div>
-                                </div>
-                                <div class="row " >
-                                    <div class="col">
-                                        <input placeholder="Company" id="company" name="company" th:field="*{company}" type="text" class="form-control"  />
-                                    </div>
-                                </div>
-                                <label class="heading_font font_sub_heading_color mt-2">Profile Photo</label>
-                                <div class="row" >
-
-                                    <div class="col" >
-                                        <input type="file" name="image" class="form-control" accept="image/png, image/jpeg" />
-                                        <input type="text" name="profilePhoto" th:field="*{profilePhoto}" class="form-control" hidden />
-                                    </div>
-                                </div>
-                                <div class="row mt-4" >
-                                    <div class="col d-flex justify-content-center">
-                                        <button type="submit" id="submit2" name="submit" class="btn btn-primary base_button px-4 py-2">Save</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <div class="profile-container shadow-effect">
+        <div class="add-job-title"><h2>Thông tin cá nhân</h2></div>
+        <form id="job-main-form" th:action="@{/recruiter-profile/addNew}" th:object="${profile}" method="post" enctype="multipart/form-data"
+        >
+            <div class="add-row">
+                <div class="add-row-title">Họ và Tên</div>
+                <div class="add-row-row">
+                    <input placeholder="Họ" id="firstName" th:field="*{firstName}"  name="firstName"  type="text" class="form-control"  />
+                    <input placeholder="Tên" id="lastName" name="lastName" th:field="*{lastName}" type="text" class="form-control"  />
                 </div>
-            </form>
-        </div>
+
+            </div>
+
+            <div class="add-row">
+                <div class="add-row-title">Địa chỉ</div>
+                <div class="add-row-row">
+                    <input th:field="*{city}" id="city" type="text"  class="form-control" placeholder="Địa chỉ">
+                    <input id="state" th:field="*{state}" type="text"  class="form-control" placeholder="Xã/phường">
+                    <input id="country" th:field="*{country}" type="text"  class="form-control" placeholder="Tỉnh/thành phố">
+                </div>
+            </div>
+            <div class="add-row">
+                <div class="add-row-title">Công ty</div>
+                <div class="add-row-row">
+                    <input placeholder="Công ty" id="company" name="company" th:field="*{company}" type="text" class="form-control"  />
+                </div>
+            </div>
+            <div class="add-row">
+                <div class="add-row-title">Ảnh đại diện</div>
+                <input id="image" type="file" name="image" class="form-control" accept="image/png, image/jpeg" />
+                <input type="text" name="profilePhoto" th:field="*{profilePhoto}" class="form-control" hidden />
+                <div class="add-row-row">
+                    <img id="logoPreview" src="#" alt="Xem trước logo"
+                         style="display:none; margin-top:10px; max-height:120px; border-radius:8px;">
+                </div>
+            </div>
+            <button type="submit" name="submit" class="myBtn btn-save">Lưu</button>
+        </form>
     </div>
 </div>
 </body>
@@ -96,4 +68,23 @@
 <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/main.js}"></script>
 
+<script>
+    const fileInput = document.getElementById('image');
+    const previewImg = document.getElementById('logoPreview');
+
+    fileInput.addEventListener('change', function () {
+        const file = this.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                previewImg.src = e.target.result;
+                previewImg.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        } else {
+            previewImg.style.display = 'none';
+            previewImg.src = '#';
+        }
+    });
+</script>
 </html>

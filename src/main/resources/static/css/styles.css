@@ -947,8 +947,16 @@ mr-5 {
   border-radius: 10px;
   overflow-y: auto;
 }
+.profile-container {
+  width: 800px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  overflow-y: auto;
+  margin-top: 100px;
+}
 
-.add-job-box form {
+
+#job-main-form {
     padding: 20px;
 }
 .add-row-row {
@@ -967,3 +975,5 @@ mr-5 {
 .btn-save {
   padding: 10px;
 }
+
+.
