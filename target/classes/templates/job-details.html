@@ -187,18 +187,43 @@
             <div class="infor-detail" >
                 <div class="infor-detail-name" sec:authorize="hasAuthority('Job Seeker')"><i class="fa-solid fa-circle-info"></i><p> Chi tiết tuyển dụng</p></div>
                 <div th:utext="${jobDetails.descriptionOfJob}" class = "description" sec:authorize="hasAuthority('Job Seeker')"></div>
-                <div class="infor-detail-name">
-                    <i class="fa-solid fa-users-line"></i>
-                    <p th:text="${'Số lượt ứng tuyển: ' + #lists.size(applyList)}"></p>
+                <div class="container-detail">
+                    <div class="infor-detail-name" sec:authorize="hasAuthority('Recruiter')">
+                        <i class="fa-solid fa-rectangle-list"></i>
+                        <p>Danh sách ứng viên</p>
+                    </div>
+                    <div class="infor-detail-name" sec:authorize="hasAuthority('Recruiter')">
+                        <i class="fa-solid fa-users-line"></i>
+                        <p th:text="${'Số lượt ứng tuyển: ' + #lists.size(applyList)}"></p>
+                    </div>
                 </div>
 
-                <div class="list-candidate">
-                    <label>Candidates Applied for Job</label>
+
+                <div class="list-candidate" sec:authorize="hasAuthority('Recruiter')">
+
                     <th:block th:each="applyList:${applyList}">
-                        <a th:href="@{/job-seeker-profile/{id}(id=${applyList.userId.userAccountId})}"
-                           class="white"
-                           th:text="${applyList.userId.firstName+' '+applyList.userId.lastName}">FirstName
-                            LastName</a>
+
+                        <a th:href="@{/job-seeker-profile/{id}(id=${applyList.userId.userAccountId})}" style="text-decoration:none; color:inherit;">
+                            <div class="row-candidate">
+
+                                <div class="candidate-option">
+                                    <div class="request-job-icon"><i class="fa-solid fa-user"></i></div>
+                                    <span th:text="${applyList.userId.firstName+' '+applyList.userId.lastName}"></span>
+                                </div>
+                                <div class="candidate-option">
+
+                                    <div class="request-job-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                                    <span th:text="${applyList.userId.certificate}"></span>
+                                </div>
+                                <div class="candidate-option" >
+
+                                    <div class="request-job-icon"><i class="fa-solid fa-briefcase"></i></div>
+                                    <span th:text="${applyList.userId.experience}"></span>
+                                </div>
+                            </div>
+                        </a>
+
+
                     </th:block>
                 </div>
 

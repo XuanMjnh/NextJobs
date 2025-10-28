@@ -168,7 +168,9 @@ public class JobPostActivityController {
         if (jobPostActivity.getPostedDate() == null)
             jobPostActivity.setPostedDate(new Date());
 
-        // Xử lý file logo
+
+
+        jobPostActivityService.addNew(jobPostActivity);
         if (!logo.isEmpty()) {
             String fileName = StringUtils.cleanPath(Objects.requireNonNull(logo.getOriginalFilename()));
             jobPostActivity.getJobCompanyId().setLogo(fileName);

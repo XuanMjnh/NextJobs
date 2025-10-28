@@ -780,6 +780,18 @@ mr-5 {
   margin-right: 10px;
   background-color: #164081;
 }
+
+.candidate-option .request-job-icon {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  margin-right: 10px;
+  background-color: #ffffff;
+  color: #706d6d;
+}
 .request-job-icon {
   width: 50px;
   height: 50px;
@@ -984,5 +996,34 @@ mr-5 {
   padding: 10px;
 }
 
+.container-detail {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 50px;
+}
 
+.list-candidate {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  padding-right: 10px;
+  padding-top: 10px;
+}
 
+.row-candidate {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  border-radius: 10px;
+  height: 55px;
+  background-color: #28A745;
+}
+.candidate-option {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding:10px;
+}
