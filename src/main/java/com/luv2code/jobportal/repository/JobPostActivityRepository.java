@@ -67,4 +67,23 @@ public interface JobPostActivityRepository extends JpaRepository<JobPostActivity
 
     // 2) Dùng khi cả job & location đều để trống: trả về tất cả, mới đăng trước
     List<JobPostActivity> findAllByOrderByPostedDateDesc();
+
+    // Lấy tất cả job do chính recruiter hiện tại đăng
+    List<JobPostActivity> findByPostedByIdUserIdOrderByPostedDateDesc(int userId);
+
+    // Tìm kiếm trong phạm vi job của chính recruiter theo keyword + location
+    @Query("""
+    SELECT j FROM JobPostActivity j
+    WHERE j.postedById.userId = :uid
+      AND (:job IS NULL OR LOWER(j.jobTitle) LIKE LOWER(CONCAT('%', :job, '%')))
+      AND (:loc IS NULL OR
+             LOWER(j.jobLocationId.city)    LIKE LOWER(CONCAT('%', :loc, '%')) OR
+             LOWER(j.jobLocationId.state)   LIKE LOWER(CONCAT('%', :loc, '%')) OR
+             LOWER(j.jobLocationId.country) LIKE LOWER(CONCAT('%', :loc, '%')))
+    ORDER BY j.postedDate DESC
+""")
+    List<JobPostActivity> searchOwn(@Param("uid") int uid,
+                                    @Param("job") String job,
+                                    @Param("loc") String location);
+
 }

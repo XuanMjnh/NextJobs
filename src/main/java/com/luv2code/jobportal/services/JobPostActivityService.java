@@ -97,6 +97,31 @@ public class JobPostActivityService {
         return out;
     }
 
+    // Lấy toàn bộ job do recruiter hiện tại đăng (để hiển thị mặc định danh sách)
+    public List<JobPostActivity> getRecruiterOwnJobs() {
+        Users u = usersService.getCurrentUser();
+        if (u == null) {
+            throw new SecurityException("Bạn chưa đăng nhập.");
+        }
+        return jobPostActivityRepository
+                .findByPostedByIdUserIdOrderByPostedDateDesc(u.getUserId());
+    }
+
+    /**
+     * Tìm kiếm job trong phạm vi "job do tôi đăng"
+     * - job/location rỗng -> truyền null (repo sẽ bỏ lọc).
+     */
+    public List<JobPostActivity> searchRecruiterOwn(String job, String location) {
+        Users u = usersService.getCurrentUser();
+        if (u == null) {
+            throw new SecurityException("Bạn chưa đăng nhập.");
+        }
+        String j = (job == null || job.isBlank()) ? null : job.trim();
+        String l = (location == null || location.isBlank()) ? null : location.trim();
+        return jobPostActivityRepository.searchOwn(u.getUserId(), j, l);
+    }
+
+
     /* ===================== UPDATE / DELETE ===================== */
 
     /**
