@@ -230,7 +230,7 @@ public class JobPostActivityController {
 
     /* ======================= GLOBAL SEARCH ======================= */
 
-    @GetMapping("global-search/")
+    @GetMapping("/global-search/")
     public String globalSearch(Model model,
                                @RequestParam(value = "job", required = false) String job,
                                @RequestParam(value = "location", required = false) String location,
@@ -244,6 +244,9 @@ public class JobPostActivityController {
                                @RequestParam(value = "days7", required = false) boolean days7,
                                @RequestParam(value = "days30", required = false) boolean days30) {
 
+        // Bind lại các giá trị cho view
+        model.addAttribute("job", job);
+        model.addAttribute("location", location);
         model.addAttribute("partTime", Objects.equals(partTime, "Part-Time"));
         model.addAttribute("fullTime", Objects.equals(fullTime, "Full-Time"));
         model.addAttribute("freelance", Objects.equals(freelance, "Freelance"));
@@ -253,35 +256,37 @@ public class JobPostActivityController {
         model.addAttribute("today", today);
         model.addAttribute("days7", days7);
         model.addAttribute("days30", days30);
-        model.addAttribute("job", job);
-        model.addAttribute("location", location);
 
+        // Xác định ngày lọc
         LocalDate searchDate = null;
-        boolean dateSearchFlag = true;
-        boolean remote = true;
-        boolean type = true;
-
+        boolean dateFilter = true;
         if (days30) searchDate = LocalDate.now().minusDays(30);
         else if (days7) searchDate = LocalDate.now().minusDays(7);
         else if (today) searchDate = LocalDate.now();
-        else dateSearchFlag = false;
+        else dateFilter = false;
+
+        //  Nếu không có filter type hoặc remote, đặt mặc định
+        boolean filterType = true;
+        boolean filterRemote = true;
 
         if (partTime == null && fullTime == null && freelance == null) {
             partTime = "Part-Time";
             fullTime = "Full-Time";
             freelance = "Freelance";
-            remote = false;
+            filterType = false; // mặc định bỏ lọc
         }
+
         if (officeOnly == null && remoteOnly == null && partialRemote == null) {
             officeOnly = "Office-Only";
             remoteOnly = "Remote-Only";
             partialRemote = "Partial-Remote";
-            type = false;
+            filterRemote = false; // mặc định bỏ lọc
         }
 
+        // Lấy danh sách job
         List<JobPostActivity> jobPost;
-        if (!dateSearchFlag && !remote && !type && !StringUtils.hasText(job) && !StringUtils.hasText(location)) {
-            jobPost = jobPostActivityService.getAll();
+        if (!dateFilter && !filterType && !filterRemote && !StringUtils.hasText(job) && !StringUtils.hasText(location)) {
+            jobPost = jobPostActivityService.getAll(); // không filter gì cả
         } else {
             jobPost = jobPostActivityService.search(
                     job, location,
@@ -291,6 +296,7 @@ public class JobPostActivityController {
             );
         }
 
+        // Tính số ngày đã đăng để hiển thị
         Map<Integer, Long> daysAgoMap = new HashMap<>();
         for (JobPostActivity jpa : jobPost) {
             if (jpa.getPostedDate() != null) {
@@ -303,8 +309,11 @@ public class JobPostActivityController {
                 daysAgoMap.put(jpa.getJobPostId(), 0L);
             }
         }
+
         model.addAttribute("daysAgoMap", daysAgoMap);
         model.addAttribute("jobPost", jobPost);
+
         return "global-search";
     }
+
 }

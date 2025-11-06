@@ -2,120 +2,86 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <link
-            th:rel="stylesheet"
-            th:href="@{/webjars/bootstrap/css/bootstrap.min.css} "
-    />
-    <link
-            rel="stylesheet"
-            type="text/css"
-            media="all"
-            th:href="@{/css/font-awesome.min.css}"
-    />
-    <link
-            rel="stylesheet"
-            type="text/css"
-            media="all"
-            th:href="@{/css/styles.css}"
-    />
-    <link
-            href="https://fonts.googleapis.com/css?family=Montserrat"
-            rel="stylesheet"
-    />
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css} "/>
+    <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/styles.css}"/>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet"/>
     <meta charset="ISO-8859-1"/>
     <title>Sign Up</title>
+    <style>
+     
+    </style>
 </head>
-
-<body class = "background">
-<section class="content hidden-overflow">
-    <div>
-        <label class="mt-4 ms-5">
-            <a th:href="@{/dashboard/}"
-               class="btn fw-bold"
-               style="background-color: #164081; color: white; border: none;">
-                NextJobs
-            </a>
-        </label>
-        <div>
-            <div class="log-container">
-                <div>
-                    <div class="d-flex justify-content-center mb-4">
-                        <h1 class="heading_font font-weight-bold">
-                            Đăng ký tài khoản
-                        </h1>
-                    </div>
-                    <div class="myForm">
-                        <form
-                                th:action="@{/register/new}"
-                                th:object="${user}"
-                                method="post"
-                        >
-                            <div class="box-body bozero mx2p">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <input
-                                                    placeholder="Email"
-                                                    name="email"
-                                                    th:field="*{email}"
-                                                    type="email"
-                                                    style="width: 100%"
-                                                    class="form-control"
-                                                    required
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <input
-                                                    min="8"
-                                                    placeholder="Mật khẩu"
-                                                    name="password"
-                                                    th:field="*{password}"
-                                                    type="password"
-                                                    class="form-control pwd"
-                                                    required
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12 form-group type-regis">
-                                        <select
-                                                required
-                                                class="form-control"
-                                                th:field="*{userTypeId}"
-                                        >
-                                            <th:block th:each="userType : ${getAllTypes}">
-                                                <option
-                                                        th:value="${userType.userTypeId}"
-                                                        th:text="${userType.userTypeName == 'Job Seeker' ? 'Ứng viên' : (userType.userTypeName == 'Recruiter' ? 'Nhà tuyển dụng' : userType.userTypeName)}">
-                                                </option>
-                                            </th:block>
-
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="box-footer">
-                                <div class="row">
-                                    <div class="form-group mt-5 col-md-12">
-                                        <button type="submit" class="myBtn py-3">Đăng ký</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+<body>
+<section class="auth-hero">
+  <div class="auth-container">
+    <div class="row g-0">
+      <div class="col-lg-6 auth-left d-none d-lg-block">
+        <div class="auth-left-content">
+          <span class="auth-badge">NextJobs</span>
+          <h2 class="mt-3 mb-2 auth-title">Tạo hồ sơ, mở khóa cơ hội</h2>
+          <p class="auth-sub mb-4">Một tài khoản để quản lý mọi thứ: hồ sơ, công việc đã lưu, lịch sử ứng tuyển.</p>
+          <ul class="mb-0" style="color:#cbd5e1; padding-left: 18px;">
+            <li>Tìm kiếm theo công việc và địa điểm</li>
+            <li>Tìm kiếm ứng viên tiềm năng</li>
+            <li>Tìm kiếm môi trường làm việc phù hợp</li>
+          </ul>
         </div>
+      </div>
+      <div class="col-lg-6 auth-right">
+        <a th:href="@{/dashboard/}" class="btn btn-sm" style="position: absolute; right: 18px; top: 16px; background:#164081; color:#fff; font-weight:700;">Trang chủ</a>
+        <h1 class="auth-card-title mb-1">Đăng ký tài khoản</h1>
+        <p class="muted mb-4">Hoàn toàn miễn phí trong vài bước</p>
+
+        <form th:action="@{/register/new}" th:object="${user}" method="post">
+          <div class="mb-3 input-icon">
+            <label class="mb-1" for="email" style="font-weight:600;">Email</label>
+            <i class="fa-solid fa-envelope"></i>
+            <input id="email" placeholder="you@example.com" name="email" th:field="*{email}" type="email" class="form-control" required/ >
+            <div class="helper">Chúng tôi sẽ không chia sẻ email của bạn.</div>
+          </div>
+          <div class="mb-3 input-icon">
+            <label class="mb-1" for="password" style="font-weight:600;">Mật khẩu</label>
+            <i class="fa-solid fa-lock"></i>
+            <div class="input-group">
+              <input id="password" min="8" placeholder="Tối thiểu 8 ký tự" name="password" th:field="*{password}" type="password" class="form-control pwd" required/>
+              <button class="btn btn-outline-secondary" type="button" id="togglePwd"><i class="fa-solid fa-eye"></i></button>
+            </div>
+            <div class="helper">Mẹo: kết hợp chữ hoa, số và ký tự đặc biệt.</div>
+          </div>
+          <div class="mb-3 input-icon">
+            <label class="mb-1" for="userTypeId" style="font-weight:600;">Bạn là</label>
+            <i class="fa-solid fa-user" style = "margin-top: 7px"></i>
+            <select id="userTypeId" required class="form-control" th:field="*{userTypeId}">
+              <th:block th:each="userType : ${getAllTypes}">
+                <option th:value="${userType.userTypeId}"
+                        th:text="${userType.userTypeName == 'Job Seeker' ? 'Ứng viên' : (userType.userTypeName == 'Recruiter' ? 'Nhà tuyển dụng' : userType.userTypeName)}"></option>
+              </th:block>
+            </select>
+          </div>
+          <button type="submit" class="brand-btn">Đăng ký</button>
+        </form>
+
+        <p class="text-center mt-3 mb-0">Đã có tài khoản? <a class="link" th:href="@{/login}">Đăng nhập</a></p>
+      </div>
     </div>
+  </div>
 </section>
-</body>
 
 <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-
+<script>
+  (function(){
+    var btn = document.getElementById('togglePwd');
+    var input = document.getElementById('password');
+    if(btn && input){
+      btn.addEventListener('click', function(){
+        var is = input.getAttribute('type') === 'password';
+        input.setAttribute('type', is ? 'text' : 'password');
+        this.innerHTML = is ? '<i class="fa-solid fa-eye-slash"></i>' : '<i class="fa-solid fa-eye"></i>';
+      });
+    }
+  })();
+</script>
+</body>
 </html>

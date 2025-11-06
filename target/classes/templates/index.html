@@ -50,39 +50,144 @@
 </form>
 <div class="infor">
     <div class="title-infor">Thị trường việc làm hôm nay <i class="fa-solid fa-chart-simple"></i></div>
-    <div class="container-infor">
-        <div>
-            <span th:text="${totalJobs}">0</span>
-            <h6>Việc làm đang tuyển</h6>
-        </div>
-        <div>
-            <span th:text="${totalRecruiter}">0</span>
-            <h6>Công ty đang tuyển</h6>
-        </div>
-        <div>
-            <span th:text="${totalJobToday}">0</span>
-            <h6>Việc làm mới nhất</h6>
-        </div>
-    </div>
-    <div class="container-infor">
-        <div>
-            <span th:text="${totalJobseeker}">0</span>
-            <h6>Ứng viên</h6>
-        </div>
-        <div>
-            <span th:text="${totalJobseekerApply}">0</span>
-            <h6>Ứng viên đã ứng tuyển</h6>
-        </div>
-        <div>
-            <span th:text="${totalApplied}">0</span>
-            <h6>Số lượt ứng tuyển</h6>
-        </div>
+    <!-- Chart container -->
+    <div style="height: calc(100% - 56px); padding: 16px;">
+        <canvas id="marketChart"
+                th:attr="data-total-jobs=${totalJobs},
+                         data-total-recruiter=${totalRecruiter},
+                         data-total-job-today=${totalJobToday},
+                         data-total-jobseeker=${totalJobseeker},
+                         data-total-jobseeker-apply=${totalJobseekerApply},
+                         data-total-applied=${totalApplied}"></canvas>
     </div>
 </div>
+
 
 </body>
 
 <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Chart.js DataLabels plugin -->
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+<script>
+    (function() {
+        var canvas = document.getElementById('marketChart');
+        if (!canvas) return;
+        var ds = canvas.dataset;
+        var labels = [
+            'Việc làm đang tuyển',
+            'Công ty đang tuyển',
+            'Việc làm mới nhất',
+            'Ứng viên',
+            'Ứng viên đã ứng tuyển',
+            'Số lượt ứng tuyển'
+        ];
+        var values = [
+            parseInt(ds.totalJobs || '0', 10),
+            parseInt(ds.totalRecruiter || '0', 10),
+            parseInt(ds.totalJobToday || '0', 10),
+            parseInt(ds.totalJobseeker || '0', 10),
+            parseInt(ds.totalJobseekerApply || '0', 10),
+            parseInt(ds.totalApplied || '0', 10)
+        ];
+
+        var ctx = canvas.getContext('2d');
+        // dynamic gradient per bar
+        function barGradient(context) {
+            var chart = context.chart;
+            var {ctx, chartArea} = chart;
+            if (!chartArea) return '#1d66d5';
+            var g = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+            g.addColorStop(0, 'rgba(29, 102, 213, 0.95)');
+            g.addColorStop(1, 'rgba(22, 64, 129, 0.55)');
+            return g;
+        }
+
+        if (window.ChartDataLabels) {
+            Chart.register(window.ChartDataLabels);
+        }
+
+        // compute a soft trend line
+        var trend = values.map(function(v, i, arr){
+            if (i === 0) return v;
+            return Math.round((arr[i-1] + v) / 2);
+        });
+
+        new Chart(ctx, {
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        type: 'bar',
+                        label: 'Thống kê hôm nay',
+                        data: values,
+                        backgroundColor: barGradient,
+                        borderColor: '#5eb5ff',
+                        borderWidth: 1,
+                        borderRadius: 8,
+                        maxBarThickness: 60,
+                        datalabels: {
+                            color: '#ffffff',
+                            anchor: 'end',
+                            align: 'end',
+                            offset: 4,
+                            formatter: function(v){
+                                return (v||0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                            }
+                        }
+                    },
+                    {
+                        type: 'line',
+                        label: 'Xu hướng',
+                        data: trend,
+                        borderColor: '#FFD509',
+                        backgroundColor: 'rgba(255, 213, 9, 0.15)',
+                        tension: 0.35,
+                        pointRadius: 3,
+                        pointBackgroundColor: '#FFD509',
+                        yAxisID: 'y'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: {
+                    duration: 1000,
+                    easing: 'easeOutQuart'
+                },
+                layout: { padding: { top: 10, right: 10, left: 0, bottom: 0 } },
+                scales: {
+                    x: {
+                        grid: { color: 'rgba(255,255,255,0.08)' },
+                        ticks: { color: '#e9f3ff' }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.12)' },
+                        ticks: { color: '#ffffff', precision: 0 }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: { color: '#ffffff' }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0,0,0,0.7)',
+                        titleColor: '#ffffff',
+                        bodyColor: '#e9f3ff',
+                        callbacks: {
+                            label: function(context) {
+                                return context.formattedValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    })();
+</script>
 
 </html>

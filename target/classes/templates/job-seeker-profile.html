@@ -155,7 +155,7 @@
                          style="display:block; margin-top:10px; max-height:120px; border-radius:8px; border: 1px solid #c8c8c8;">
                 </div>
 
-                <label for="image" class="btn btn-outline-secondary" style="margin-top:10px" sec:authorize="hasAuthority('Job seeker')">Chọn/Cập nhật ảnh</label>
+                <label for="image" class="btn btn-outline-secondary" style="margin-top:10px" sec:authorize="hasAuthority('Job Seeker')">Chọn/Cập nhật ảnh</label>
             </div>
 
             <div class="add-row">
@@ -168,7 +168,7 @@
                       <span id="resumeName"
                             th:text="${profile.resume != null && profile.resume != '' ? profile.resume : 'Chưa có CV'}"
                             style="color: green"></span>
-                        <label for="CV" class="btn btn-outline-secondary" sec:authorize="hasAuthority('Job seeker')">Chọn/Cập nhật CV</label>
+                        <label for="CV" class="btn btn-outline-secondary" sec:authorize="hasAuthority('Job Seeker')">Chọn/Cập nhật CV</label>
                         <a th:if="${profile.resume != null && profile.resume != ''}"
                            th:href="@{|/job-seeker-profile/downloadResume?fileName=${profile.resume}&&userID=${profile.userAccountId}|}"
                            class="btn btn-outline-secondary">Tải xuống</a>
@@ -176,7 +176,7 @@
                 </div>
             </div>
 
-            <button type="submit" name="submit" class="myBtn btn-save" sec:authorize="hasAuthority('Job seeker')">Lưu</button>
+            <button type="submit" name="submit" class="myBtn btn-save" sec:authorize="hasAuthority('Job Seeker')">Lưu</button>
         </form>
     </div>
 </div>
