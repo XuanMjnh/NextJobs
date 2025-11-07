@@ -342,6 +342,7 @@ section.section {
   position: absolute;
   width: 60%;
   left: 20%;
+  color: #ffffff;
 }
 .backcolor {
   background-color: #F3F5F7;
@@ -349,8 +350,9 @@ section.section {
 
 .sidenav {
   overflow: auto;
-  background-color: #ffffff;
-  color: #454547;
+
+  /*color: #454547;*/
+  color: #ffffff;
   padding-left: 0;
   padding-top: 20px;
   width: 300px;
@@ -374,7 +376,6 @@ article {
   width: 100%;
 }
 div.box {
-  background-color: white;
   margin-bottom: 200px;
 }
 .box .job-row:hover {
@@ -388,7 +389,8 @@ label.large-label {
   font-size: 20px;
   font-weight: bold;
   line-height: 29px;
-  color: #454547;
+  /*color: #454547;*/
+  color: #ffffff;
   margin-top: 20px;
   margin-left: 10px;
   margin-bottom: 18px;
@@ -405,14 +407,15 @@ label.large-label {
   position: relative;
   display: flex;
   flex-direction: row;
-  border: 1px solid rgba(22,64,129,0.5);
+  /*F*/
   border-radius: 10px;
   padding: 8px;
   margin-bottom: 10px;
   margin-left: 10px;
   height: 175px;
   width: 98%;
-  background-color: rgba(115, 200, 210, 0.1);
+  /*background-color: rgba(115, 200, 210, 0.1);*/
+  background-color: rgba(255, 255, 255, 1);
 }
 
 .job-row:hover .row-job-title label{
