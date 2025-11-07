@@ -192,6 +192,7 @@ public class JobPostActivityController {
             try {
                 String uploadDir = "photos/company/" + jobPostActivity.getJobCompanyId().getId();
                 FileUploadUtil.saveFile(uploadDir, fileName, logo);
+                jobPostActivityService.addNew(jobPostActivity);
             } catch (IOException e) {
                 throw new RuntimeException("Lỗi lưu file: " + e.getMessage());
             }
