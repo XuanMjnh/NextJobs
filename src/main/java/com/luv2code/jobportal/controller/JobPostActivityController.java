@@ -51,6 +51,7 @@ public class JobPostActivityController {
                              @RequestParam(value = "partTime", required = false) String partTime,
                              @RequestParam(value = "fullTime", required = false) String fullTime,
                              @RequestParam(value = "freelance", required = false) String freelance,
+                             @RequestParam(value = "internship", required = false) String internship,
                              @RequestParam(value = "remoteOnly", required = false) String remoteOnly,
                              @RequestParam(value = "officeOnly", required = false) String officeOnly,
                              @RequestParam(value = "partialRemote", required = false) String partialRemote,
@@ -62,6 +63,8 @@ public class JobPostActivityController {
         model.addAttribute("partTime", Objects.equals(partTime, "Part-Time"));
         model.addAttribute("fullTime", Objects.equals(fullTime, "Full-Time"));
         model.addAttribute("freelance", Objects.equals(freelance, "Freelance"));
+        model.addAttribute("internship", Objects.equals(internship, "Internship"));
+
         model.addAttribute("remoteOnly", Objects.equals(remoteOnly, "Remote-Only"));
         model.addAttribute("officeOnly", Objects.equals(officeOnly, "Office-Only"));
         model.addAttribute("partialRemote", Objects.equals(partialRemote, "Partial-Remote"));
@@ -105,10 +108,11 @@ public class JobPostActivityController {
         else if (today) searchDate = LocalDate.now();
         else dateSearchFlag = false;
 
-        if (partTime == null && fullTime == null && freelance == null) {
+        if (partTime == null && fullTime == null && freelance == null && internship == null) {
             partTime = "Part-Time";
             fullTime = "Full-Time";
             freelance = "Freelance";
+            internship = "Internship";
             remote = false; // đánh dấu "không lọc type"
         }
         if (officeOnly == null && remoteOnly == null && partialRemote == null) {
@@ -124,7 +128,7 @@ public class JobPostActivityController {
         } else {
             jobPost = jobPostActivityService.search(
                     job, location,
-                    Arrays.asList(partTime, fullTime, freelance),
+                    Arrays.asList(partTime, fullTime, freelance, internship),
                     Arrays.asList(remoteOnly, officeOnly, partialRemote),
                     searchDate
             );
@@ -238,6 +242,7 @@ public class JobPostActivityController {
                                @RequestParam(value = "partTime", required = false) String partTime,
                                @RequestParam(value = "fullTime", required = false) String fullTime,
                                @RequestParam(value = "freelance", required = false) String freelance,
+                               @RequestParam(value = "internship", required = false) String internship,
                                @RequestParam(value = "remoteOnly", required = false) String remoteOnly,
                                @RequestParam(value = "officeOnly", required = false) String officeOnly,
                                @RequestParam(value = "partialRemote", required = false) String partialRemote,
@@ -251,6 +256,7 @@ public class JobPostActivityController {
         model.addAttribute("partTime", Objects.equals(partTime, "Part-Time"));
         model.addAttribute("fullTime", Objects.equals(fullTime, "Full-Time"));
         model.addAttribute("freelance", Objects.equals(freelance, "Freelance"));
+        model.addAttribute("internship", Objects.equals(internship, "Internship"));
         model.addAttribute("remoteOnly", Objects.equals(remoteOnly, "Remote-Only"));
         model.addAttribute("officeOnly", Objects.equals(officeOnly, "Office-Only"));
         model.addAttribute("partialRemote", Objects.equals(partialRemote, "Partial-Remote"));
@@ -270,10 +276,11 @@ public class JobPostActivityController {
         boolean filterType = true;
         boolean filterRemote = true;
 
-        if (partTime == null && fullTime == null && freelance == null) {
+        if (partTime == null && fullTime == null && freelance == null && internship == null) {
             partTime = "Part-Time";
             fullTime = "Full-Time";
             freelance = "Freelance";
+            internship = "Internship";
             filterType = false; // mặc định bỏ lọc
         }
 
@@ -291,7 +298,7 @@ public class JobPostActivityController {
         } else {
             jobPost = jobPostActivityService.search(
                     job, location,
-                    Arrays.asList(partTime, fullTime, freelance),
+                    Arrays.asList(partTime, fullTime, freelance, internship),
                     Arrays.asList(remoteOnly, officeOnly, partialRemote),
                     searchDate
             );
