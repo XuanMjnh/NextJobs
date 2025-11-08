@@ -38,8 +38,7 @@
 <div class="add-job-container">
 
     <div class="profile-container-seeker shadow-effect">
-        <div class="add-job-title" sec:authorize="hasAuthority('Job Seeker')"><h2>Thông tin cá nhân</h2></div>
-        <div class="add-job-title" sec:authorize="hasAuthority('Recruiter')"><h2>Thông tin ứng viên ứng tuyển</h2></div>
+        <div class="add-job-title"><h2>Thông tin cá nhân</h2></div>
         <form
                 th:action="@{/job-seeker-profile/addNew}"
                 th:object="${profile}"
