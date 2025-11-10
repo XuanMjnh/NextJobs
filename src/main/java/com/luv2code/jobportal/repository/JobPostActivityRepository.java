@@ -82,10 +82,18 @@ ORDER BY j.posted_date desc
     );
 
 
-
-
+//    @Query(value = "SELECT COUNT(*) FROM job_post_activity WHERE DATE(posted_date) = CURRENT_DATE - INTERVAL 1 DAY", nativeQuery = true)
+//    long countTodayJobPosts();
     @Query("SELECT COUNT(j) FROM JobPostActivity j WHERE DATE(j.postedDate) = CURRENT_DATE")
     long countTodayJobPosts();
+
+//    @Query(value = """
+//SELECT COUNT(*)
+//FROM job_seeker_apply
+//WHERE apply_date >= CURRENT_DATE - INTERVAL 7 DAY
+//""", nativeQuery = true)
+//    long countApplyLast7Days();
+
 
     // 1) Tìm kiếm chỉ theo từ khóa & địa điểm. Nếu tham số = null thì tự bỏ qua điều kiện.
     @Query("""
