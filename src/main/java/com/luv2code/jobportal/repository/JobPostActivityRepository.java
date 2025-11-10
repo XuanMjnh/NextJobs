@@ -22,14 +22,17 @@ public interface JobPostActivityRepository extends JpaRepository<JobPostActivity
             " GROUP By j.job_post_id" ,nativeQuery = true)
     List<IRecruiterJobs> getRecruiterJobs(@Param("recruiter") int recruiter);
 
+
+
     @Query(value = """
 SELECT * FROM job_post_activity j
 INNER JOIN job_location l ON j.job_location_id = l.id
 INNER JOIN job_company c ON j.job_company_id = c.id
+
 WHERE
     (:job IS NULL OR 
         j.job_title LIKE %:job% OR
-        c.name LIKE %:job%
+        c.name LIKE %:job% OR
     )
     AND (
         :location IS NULL OR
@@ -47,6 +50,8 @@ ORDER BY j.posted_date DESC
             @Param("remote") List<String> remote,
             @Param("type") List<String> type
     );
+
+
 
     @Query(value = """
 SELECT * FROM job_post_activity j

@@ -71,7 +71,9 @@ public class RecruiterProfileController {
 
         String uploadDir = "photos/recruiter/" + savedUser.getUserAccountId();
         try {
-            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+            if (!multipartFile.getOriginalFilename().equals("")) {
+                FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
