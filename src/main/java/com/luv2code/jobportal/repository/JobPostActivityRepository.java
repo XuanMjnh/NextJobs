@@ -32,7 +32,7 @@ INNER JOIN job_company c ON j.job_company_id = c.id
 WHERE
     (:job IS NULL OR 
         j.job_title LIKE %:job% OR
-        c.name LIKE %:job% OR
+        c.name LIKE %:job%
     )
     AND (
         :location IS NULL OR

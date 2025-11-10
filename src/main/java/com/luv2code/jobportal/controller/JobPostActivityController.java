@@ -42,7 +42,7 @@ public class JobPostActivityController {
         this.jobSeekerSaveService = jobSeekerSaveService;
     }
 
-    /* ======================= DASHBOARD ======================= */
+
 
     @GetMapping("/dashboard/")
     public String searchJobs(Model model,
@@ -84,7 +84,7 @@ public class JobPostActivityController {
         boolean isRecruiter = authentication != null
                 && authentication.getAuthorities().contains(new SimpleGrantedAuthority("Recruiter"));
 
-        // =========== RECRUITER: chỉ xem/tìm trong job của chính mình ===========
+
         if (isRecruiter) {
             List<JobPostActivity> jobs;
             boolean noKeyword = !StringUtils.hasText(job) && !StringUtils.hasText(location);
@@ -97,7 +97,7 @@ public class JobPostActivityController {
             return "dashboard";
         }
 
-        // =========== JOB SEEKER: filter đầy đủ (type/remote/date) ===========
+
         LocalDate searchDate = null;
         boolean dateSearchFlag = true;
         boolean remote = true;
