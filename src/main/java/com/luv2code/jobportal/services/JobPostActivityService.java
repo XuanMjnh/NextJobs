@@ -31,7 +31,7 @@ public class JobPostActivityService {
         this.usersService = usersService;
     }
 
-    /* ===================== CRUD / QUERY ===================== */
+
 
     @Transactional
     public JobPostActivity addNew(JobPostActivity jobPostActivity) {
@@ -44,14 +44,10 @@ public class JobPostActivityService {
     }
 
     public List<JobPostActivity> getAll() {
-        return jobPostActivityRepository.findAll();
+        return jobPostActivityRepository.findAllByOrderByPostedDateDesc();
     }
 
-    /**
-     * Tìm kiếm job theo từ khóa, địa điểm, loại hình (type), chế độ làm việc (remote) và mốc thời gian.
-     * - Lọc bỏ phần tử null trong các list filter trước khi gọi repository.
-     * - Nếu job/location trống -> truyền null xuống repo (repo nên xử lý IS NULL như “bỏ lọc”).
-     */
+
     public List<JobPostActivity> search(String job,
                                         String location,
                                         List<String> type,
@@ -107,10 +103,7 @@ public class JobPostActivityService {
                 .findByPostedByIdUserIdOrderByPostedDateDesc(u.getUserId());
     }
 
-    /**
-     * Tìm kiếm job trong phạm vi "job do tôi đăng"
-     * - job/location rỗng -> truyền null (repo sẽ bỏ lọc).
-     */
+
     public List<JobPostActivity> searchRecruiterOwn(String job, String location) {
         Users u = usersService.getCurrentUser();
         if (u == null) {
@@ -122,13 +115,7 @@ public class JobPostActivityService {
     }
 
 
-    /* ===================== UPDATE / DELETE ===================== */
 
-    /**
-     * Cập nhật job từ dữ liệu form.
-     * - Kiểm tra quyền sở hữu (người đăng hiện tại).
-     * - Chỉ ghi đè các field được phép sửa.
-     */
     @Transactional
     public void updateFromForm(int id, JobPostActivity form) {
         JobPostActivity job = getOne(id);
@@ -138,7 +125,7 @@ public class JobPostActivityService {
             throw new SecurityException("Bạn không có quyền sửa job này");
         }
 
-        // copy field cho phép sửa
+
         job.setJobTitle(form.getJobTitle());
         job.setJobType(form.getJobType());
         job.setRemote(form.getRemote());
@@ -151,15 +138,11 @@ public class JobPostActivityService {
         job.setField(form.getField());
         job.setNumber(form.getNumber());
 
-        // Nếu dùng optimistic locking (@Version), đảm bảo form có field version hidden trong template.
+
         jobPostActivityRepository.save(job);
     }
 
-    /**
-     * Xóa job an toàn:
-     * - Kiểm tra quyền sở hữu
-     * - Xóa record con trước (Apply/Save) nếu chưa cấu hình cascade/orphanRemoval tại DB/Entity.
-     */
+
     @Transactional
     public void delete(int id) {
         JobPostActivity job = getOne(id);
@@ -171,10 +154,7 @@ public class JobPostActivityService {
         jobPostActivityRepository.delete(job); // DB đã bật FK ON DELETE CASCADE thì sẽ tự xóa apply/save
     }
 
-    /**
-     * Tìm kiếm chỉ theo thanh search (job + location) và gắn lại cờ isActive/isSaved
-     * cho người dùng hiện tại (nếu là Job Seeker) để UI hiển thị “Đã ứng tuyển/Đã lưu”.
-     */
+
     public List<JobPostActivity> searchOnly(String job, String location) {
         String j = (job == null || job.isBlank()) ? null : job.trim();
         String l = (location == null || location.isBlank()) ? null : location.trim();
@@ -183,18 +163,11 @@ public class JobPostActivityService {
                 ? jobPostActivityRepository.findAllByOrderByPostedDateDesc()
                 : jobPostActivityRepository.searchByKeyword(j, l);
 
-        // -> gắn lại cờ applied/saved theo user hiện tại
+
         return decorateWithUserFlags(result);
     }
 
-    /* ===================== gắn cờ applied/saved ===================== */
 
-    /**
-     * Với danh sách job, set lại hai cờ tạm thời:
-     *   - job.setIsActive(true) nếu user hiện tại đã apply job đó
-     *   - job.setIsSaved(true)  nếu user hiện tại đã lưu job đó
-     * Nếu user không phải Job Seeker (VD: Recruiter) thì bỏ qua.
-     */
     private List<JobPostActivity> decorateWithUserFlags(List<JobPostActivity> jobs) {
         if (jobs == null || jobs.isEmpty()) return jobs;
 
@@ -216,7 +189,7 @@ public class JobPostActivityService {
                 job.setIsSaved(isSaved);
             }
         }
-        // Recruiter hoặc chưa đăng nhập: không gắn cờ
+
         return jobs;
     }
 }

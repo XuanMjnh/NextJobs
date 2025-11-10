@@ -44,7 +44,7 @@ public class UsersController {
     public String userRegistration(@Valid Users users, Model model) {
         Optional<Users> optionalUsers = usersService.getUserByEmail(users.getEmail());
         if (optionalUsers.isPresent()) {
-            model.addAttribute("error", "Email already registered,try to login or register with other email.");
+            model.addAttribute("error", "Email đã tồn tại, vui lòng đăng nhập hoặc đăng ký với email khác");
             List<UsersType> usersTypes = usersTypeService.getAll();
             model.addAttribute("getAllTypes", usersTypes);
             model.addAttribute("user", new Users());

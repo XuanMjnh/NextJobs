@@ -167,7 +167,6 @@ public class JobPostActivityController {
         return "dashboard";
     }
 
-    /* =================== ADD / EDIT / UPDATE / DELETE =================== */
 
     @GetMapping("/dashboard/add")
     public String addJobs(Model model) {
@@ -233,7 +232,6 @@ public class JobPostActivityController {
         }
     }
 
-    /* ======================= GLOBAL SEARCH ======================= */
 
     @GetMapping("/global-search/")
     public String globalSearch(Model model,

@@ -23,19 +23,24 @@ public interface JobPostActivityRepository extends JpaRepository<JobPostActivity
     List<IRecruiterJobs> getRecruiterJobs(@Param("recruiter") int recruiter);
 
     @Query(value = """
-    SELECT * FROM job_post_activity j
-    INNER JOIN job_location l ON j.job_location_id = l.id
-    WHERE
-        (:job IS NULL OR j.job_title LIKE %:job%)
-        AND (
-            :location IS NULL OR
-            l.city LIKE %:location% OR
-            l.country LIKE %:location% OR
-            l.state LIKE %:location%
-        )
-        AND (j.job_type IN(:type))
-        AND (j.remote IN(:remote))
-    """, nativeQuery = true)
+SELECT * FROM job_post_activity j
+INNER JOIN job_location l ON j.job_location_id = l.id
+INNER JOIN job_company c ON j.job_company_id = c.id
+WHERE
+    (:job IS NULL OR 
+        j.job_title LIKE %:job% OR
+        c.name LIKE %:job%
+    )
+    AND (
+        :location IS NULL OR
+        l.city LIKE %:location% OR
+        l.country LIKE %:location% OR
+        l.state LIKE %:location%
+    )
+    AND (j.job_type IN(:type))
+    AND (j.remote IN(:remote))
+ORDER BY j.posted_date DESC
+""", nativeQuery = true)
     List<JobPostActivity> searchWithoutDate(
             @Param("job") String job,
             @Param("location") String location,
@@ -43,22 +48,26 @@ public interface JobPostActivityRepository extends JpaRepository<JobPostActivity
             @Param("type") List<String> type
     );
 
-
     @Query(value = """
-    SELECT * FROM job_post_activity j
-    INNER JOIN job_location l ON j.job_location_id = l.id
-    WHERE
-        (:job IS NULL OR j.job_title LIKE %:job%)
-        AND (
-            :location IS NULL OR
-            l.city LIKE %:location% OR
-            l.country LIKE %:location% OR
-            l.state LIKE %:location%
-        )
-        AND (j.job_type IN(:type))
-        AND (j.remote IN(:remote))
-        AND (posted_date >= :date)
-    """, nativeQuery = true)
+SELECT * FROM job_post_activity j
+INNER JOIN job_location l ON j.job_location_id = l.id
+INNER JOIN job_company c ON j.job_company_id = c.id
+WHERE
+    (:job IS NULL OR 
+        j.job_title LIKE %:job% OR
+        c.name LIKE %:job%
+    )
+    AND (
+        :location IS NULL OR
+        l.city LIKE %:location% OR
+        l.country LIKE %:location% OR
+        l.state LIKE %:location%
+    )
+    AND (j.job_type IN(:type))
+    AND (j.remote IN(:remote))
+    AND (posted_date >= :date)
+ORDER BY j.posted_date desc 
+""", nativeQuery = true)
     List<JobPostActivity> search(
             @Param("job") String job,
             @Param("location") String location,
@@ -66,6 +75,9 @@ public interface JobPostActivityRepository extends JpaRepository<JobPostActivity
             @Param("type") List<String> type,
             @Param("date") LocalDate searchDate
     );
+
+
+
 
     @Query("SELECT COUNT(j) FROM JobPostActivity j WHERE DATE(j.postedDate) = CURRENT_DATE")
     long countTodayJobPosts();
