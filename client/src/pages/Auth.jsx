@@ -4,7 +4,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { ErrorBox, Field } from "../components/UI";
 export default function Auth({ mode }) {
   const registering = mode === "register",
-    { authenticate } = useAuth(),
+    { authenticate, loggedOut } = useAuth(),
     navigate = useNavigate(),
     location = useLocation();
   const [error, setError] = useState(null),
@@ -17,7 +17,7 @@ export default function Auth({ mode }) {
     const data = Object.fromEntries(new FormData(e.currentTarget));
     try {
       const u = await authenticate(mode, data);
-      const from = location.state?.from;
+      const from = loggedOut ? null : location.state?.from;
       navigate(
         from?.startsWith("/") && !from.startsWith("//")
           ? from

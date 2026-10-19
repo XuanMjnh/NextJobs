@@ -1,5 +1,5 @@
 import { pool } from "../config/db.js";
-import { fail } from "../utils/errors.js";
+import { fail } from "../utils/appError.js";
 export async function save(userId, jobId) {
   await pool.execute(
     "INSERT IGNORE INTO saved_jobs(user_id,job_id) VALUES(?,?)",

@@ -49,7 +49,7 @@ export function Header() {
                 onClick={async () => {
                   try {
                     await logout();
-                    navigate("/");
+                    navigate("/", { replace: true });
                   } catch (e) {
                     setError(e.message);
                   }
