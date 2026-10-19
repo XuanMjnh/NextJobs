@@ -24,7 +24,7 @@ nextjobs/
 │       ├── main.jsx         # Điểm khởi chạy frontend
 │       └── styles.css       # CSS
 ├── server/                  # API và dữ liệu backend
-│   ├── database/            # SQL khởi tạo schema
+│  
 │   ├── src/
 │   │   ├── config/          # Cấu hình môi trường và database
 │   │   ├── controllers/     # Xử lý request
@@ -37,7 +37,7 @@ nextjobs/
 │   │   ├── app.js           # Cấu hình Express
 │   │   └── server.js        # Khởi chạy API
 │   ├── tests/               # Kiểm thử backend
-│   └── .env.example         # Mẫu cấu hình môi trường
+│   
 ├── package.json             # Scripts và npm workspaces
 └── package-lock.json        # Khóa phiên bản dependencies
 ```
